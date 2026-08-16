@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="LEXOURS Premium Intelligence Lookup"
+    >
+
+    <title>LEXOURS — Intelligence Lookup</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #050505;
+            --bg2: #090909;
+            --card: rgba(17, 17, 18, .72);
+            --card2: rgba(255,255,255,.035);
+
+            --gold: #c89b52;
+            --gold-light: #f2d18b;
+
+            --white: #f7f7f7;
+            --text: #dedede;
+            --muted: #88888f;
+
+            --green: #55e6a5;
+            --red: #ff6874;
+
+            --border: rgba(255,255,255,.085);
+            --border-gold: rgba(201,155,82,.25);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--white);
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(201,155,82,.13),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(103,78,177,.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(201,155,82,.055),
+                    transparent 30%
+                ),
+                var(--bg);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .42;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 48px 48px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* NAV */
+
+        .nav {
+            height: 92px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--border-gold);
+            border-radius: 13px;
+
+            color: var(--gold-light);
+
+            font-size: 18px;
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.08),
+                    rgba(255,255,255,.015)
+                );
+
+            box-shadow:
+                0 0 30px rgba(201,155,82,.08),
+                inset 0 1px rgba(255,255,255,.1);
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            color: var(--green);
+
+            border: 1px solid rgba(85,230,165,.16);
+            border-radius: 999px;
+
+            background: rgba(85,230,165,.045);
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 10px var(--green);
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 22px;
+
+            color: var(--gold-light);
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+
+            width: 25px;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--gold)
+                );
+        }
+
+        .eyebrow::after {
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--gold),
+                    transparent
+                );
+        }
+
+        h1 {
+            max-width: 900px;
+            margin: 0 auto;
+
+            font-size: clamp(48px, 8vw, 92px);
+            line-height: .94;
+
+            letter-spacing: -5px;
+            font-weight: 850;
+        }
+
+        h1 .gold {
+            color: transparent;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    #fff,
+                    var(--gold-light)
+                );
+
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .subtitle {
+            max-width: 650px;
+
+            margin: 28px auto 0;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* SEARCH */
+
+        .search-wrap {
+            max-width: 760px;
+            margin: 40px auto 0;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+
+            padding: 8px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 23px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.42),
+                inset 0 1px rgba(255,255,255,.065);
+
+            transition: .3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color:
+                rgba(201,155,82,.35);
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.45),
+                0 0 0 4px rgba(201,155,82,.045);
+        }
+
+        .search-icon {
+            width: 48px;
+
+            display: grid;
+            place-items: center;
+
+            color: #68686f;
+        }
+
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #number {
+            flex: 1;
+            min-width: 0;
+
+            border: 0;
+            outline: 0;
+
+            color: white;
+
+            background: transparent;
+
+            padding: 20px 10px;
+
+            font-size: 16px;
+        }
+
+        #number::placeholder {
+            color: #5f5f65;
+        }
+
+        .search-btn {
+            min-height: 55px;
+
+            padding: 0 28px;
+
+            border: 0;
+            border-radius: 17px;
+
+            color: #080808;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold-light),
+                    var(--gold)
+                );
+
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            transition:
+                transform .2s,
+                box-shadow .2s,
+                opacity .2s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 40px
+                rgba(201,155,82,.22);
+        }
+
+        .search-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hint {
+            margin-top: 13px;
+
+            color: #55555b;
+
+            font-size: 10px;
+            letter-spacing: .4px;
+        }
+
+        /* RESULT */
+
+        .results-section {
+            display: none;
+
+            margin: 15px 0 60px;
+
+            animation:
+                reveal .45s ease both;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.018)
+                );
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.3);
+
+            backdrop-filter: blur(25px);
+        }
+
+        .result-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            padding: 23px 25px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .result-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .result-symbol {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            color: var(--gold-light);
+
+            background:
+                rgba(201,155,82,.09);
+
+            border:
+                1px solid var(--border-gold);
+        }
+
+        .result-title {
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .result-subtitle {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+        .status {
+            padding: 7px 10px;
+
+            border: 1px solid rgba(85,230,165,.18);
+            border-radius: 999px;
+
+            color: var(--green);
+
+            background:
+                rgba(85,230,165,.055);
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .result-body {
+            padding: 25px;
+        }
+
+        .data-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+        }
+
+        .data-item {
+            min-width: 0;
+
+            padding: 17px;
+
+            border:
+                1px solid rgba(255,255,255,.055);
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,.022);
+
+            transition: .2s;
+        }
+
+        .data-item:hover {
+            border-color:
+                rgba(201,155,82,.15);
+
+            background:
+                rgba(201,155,82,.025);
+        }
+
+        .data-key {
+            margin-bottom: 8px;
+
+            color: #6d6d74;
+
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .data-value {
+            color: #eeeeee;
+
+            font-size: 13px;
+            line-height: 1.55;
+
+            overflow-wrap: anywhere;
+        }
+
+        .empty {
+            padding: 45px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* LOADING */
+
+        .loading {
+            padding: 50px 20px;
+
+            text-align: center;
+        }
+
+        .spinner {
+            width: 27px;
+            height: 27px;
+
+            margin: 0 auto 17px;
+
+            border:
+                2px solid rgba(255,255,255,.1);
+
+            border-top-color:
+                var(--gold-light);
+
+            border-radius: 50%;
+
+            animation:
+                spin .7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-title {
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .loading-sub {
+            margin-top: 7px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+        /* ERROR */
+
+        .error-box {
+            padding: 35px;
+
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 45px;
+            height: 45px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 15px;
+
+            border-radius: 14px;
+
+            color: var(--red);
+
+            background:
+                rgba(255,104,116,.07);
+
+            border:
+                1px solid rgba(255,104,116,.15);
+        }
+
+        .error-title {
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .error-text {
+            max-width: 500px;
+
+            margin: 8px auto 0;
+
+            color: var(--muted);
+
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* RAW JSON */
+
+        .raw-wrap {
+            margin-top: 13px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            border-radius: 17px;
+
+            background:
+                rgba(0,0,0,.2);
+
+            overflow: hidden;
+        }
+
+        .raw-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 15px 17px;
+
+            cursor: pointer;
+
+            user-select: none;
+        }
+
+        .raw-title {
+            color: #88888f;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .raw-arrow {
+            color: #66666c;
+            transition: transform .2s;
+        }
+
+        .raw-wrap.open .raw-arrow {
+            transform: rotate(180deg);
+        }
+
+        .raw-content {
+            display: none;
+
+            padding: 0 15px 15px;
+        }
+
+        .raw-wrap.open .raw-content {
+            display: block;
+        }
+
+        pre {
+            max-height: 450px;
+            overflow: auto;
+
+            padding: 18px;
+
+            border-radius: 13px;
+
+            color: #cfcfcf;
+
+            background: #030303;
+
+            border:
+                1px solid rgba(255,255,255,.055);
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .copy-row {
+            display: flex;
+            justify-content: flex-end;
+
+            margin-top: 10px;
+        }
+
+        .copy-btn,
+        .clear-btn {
+            padding: 10px 14px;
+
+            border-radius: 11px;
+
+            color: #bcbcc2;
+
+            background:
+                rgba(255,255,255,.04);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            font-size: 10px;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .copy-btn:hover,
+        .clear-btn:hover {
+            color: white;
+
+            border-color:
+                rgba(201,155,82,.25);
+        }
+
+        /* HISTORY */
+
+        .history {
+            display: none;
+
+            margin-top: 16px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 21px;
+
+            background:
+                rgba(255,255,255,.025);
+        }
+
+        .history-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 15px 18px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .history-title {
+            color: #77777e;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .history-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            padding: 13px;
+        }
+
+        .history-item {
+            padding: 9px 11px;
+
+            color: #a9a9ae;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.055);
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            transition: .2s;
+        }
+
+        .history-item:hover {
+            color: var(--gold-light);
+
+            border-color:
+                var(--border-gold);
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 40px 0 30px;
+
+            text-align: center;
+
+            color: #4f4f55;
+
+            font-size: 10px;
+            letter-spacing: .5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: min(
+                    100% - 20px,
+                    1180px
+                );
+            }
+
+            .nav {
+                height: 75px;
+            }
+
+            .online {
+                display: none;
+            }
+
+            .hero {
+                padding: 65px 0 40px;
+            }
+
+            h1 {
+                font-size: clamp(46px, 15vw, 70px);
+                letter-spacing: -3px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .search-box {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .search-icon {
+                display: none;
+            }
+
+            #number {
+                padding:
+                    18px 15px;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-head {
+                align-items: flex-start;
+            }
+
+            .status {
+                display: none;
+            }
+
+            .result-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- NAV -->
+
+        <nav class="nav">
+
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    L
+                </div>
+
+                <div class="brand-name">
+                    LEXOURS
+                </div>
+            </a>
+
+            <div class="online">
+                <span class="online-dot"></span>
+                SYSTEM ONLINE
+            </div>
+
+        </nav>
+
+
+        <!-- HERO -->
+
+        <main>
+
+            <section class="hero">
+
+                <div class="eyebrow">
+                    Premium Intelligence Interface
+                </div>
+
+                <h1>
+                    Search.
+                    <br>
+                    <span class="gold">
+                        Discover.
+                    </span>
+                </h1>
+
+                <p class="subtitle">
+                    Enter a number to retrieve the information
+                    available through the connected lookup service.
+                </p>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-wrap">
+
+                    <form
+                        id="searchForm"
+                        class="search-box"
+                    >
+
+                        <div class="search-icon">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="7"
+                                ></circle>
+
+                                <path
+                                    d="m20 20-4-4"
+                                ></path>
+                            </svg>
+                        </div>
+
+                        <input
+                            id="number"
+                            type="text"
+                            inputmode="tel"
+                            autocomplete="off"
+                            spellcheck="false"
+                            placeholder="Enter number..."
+                            aria-label="Number"
+                            required
+                        >
+
+                        <button
+                            id="searchBtn"
+                            class="search-btn"
+                            type="submit"
+                        >
+                            SEARCH
+                        </button>
+
+                    </form>
+
+                    <div class="hint">
+                        Press ENTER to search
+                    </div>
+
+                    <!-- HISTORY -->
+
+                    <div
+                        id="history"
+                        class="history"
+                    >
+
+                        <div class="history-head">
+
+                            <div class="history-title">
+                                Recent Searches
+                            </div>
+
+                            <button
+                                id="clearHistory"
+                                class="clear-btn"
+                                type="button"
+                            >
+                                CLEAR
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="historyList"
+                            class="history-list"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RESULTS -->
+
+            <section
+                id="resultsSection"
+                class="results-section"
+            >
+
+                <div class="result-card">
+
+                    <div class="result-head">
+
+                        <div class="result-heading">
+
+                            <div class="result-symbol">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <div class="result-title">
+                                    Lookup Result
+                                </div>
+
+                                <div
+                                    id="resultSubtitle"
+                                    class="result-subtitle"
+                                >
+                                    API response
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="resultStatus"
+                            class="status"
+                        >
+                            RECEIVED
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-body">
+
+                        <div id="resultContent">
+                        </div>
+
+
+                        <!-- RAW -->
+
+                        <div
+                            id="rawWrap"
+                            class="raw-wrap"
+                        >
+
+                            <div
+                                id="rawHeader"
+                                class="raw-header"
+                            >
+
+                                <div class="raw-title">
+                                    View Raw API Response
+                                </div>
+
+                                <div
+                                    id="rawArrow"
+                                    class="raw-arrow"
+                                >
+                                    ▼
+                                </div>
+
+                            </div>
+
+                            <div class="raw-content">
+
+                                <pre id="rawJson"></pre>
+
+                                <div class="copy-row">
+
+                                    <button
+                                        id="copyBtn"
+                                        class="copy-btn"
+                                        type="button"
+                                    >
+                                        COPY JSON
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <footer>
+            LEXOURS © 2026 · Premium Lookup Interface
+        </footer>
+
+    </div>
+
+
+    <script>
+
+        const form =
+            document.getElementById("searchForm");
+
+        const numberInput =
+            document.getElementById("number");
+
+        const searchBtn =
+            document.getElementById("searchBtn");
+
+        const resultsSection =
+            document.getElementById("resultsSection");
+
+        const resultContent =
+            document.getElementById("resultContent");
+
+        const resultSubtitle =
+            document.getElementById("resultSubtitle");
+
+        const resultStatus =
+            document.getElementById("resultStatus");
+
+        const rawJson =
+            document.getElementById("rawJson");
+
+        const rawWrap =
+            document.getElementById("rawWrap");
+
+        const rawHeader =
+            document.getElementById("rawHeader");
+
+        const copyBtn =
+            document.getElementById("copyBtn");
+
+        const historyBox =
+            document.getElementById("history");
+
+        const historyList =
+            document.getElementById("historyList");
+
+        const clearHistoryBtn =
+            document.getElementById("clearHistory");
+
+
+        let latestResponse = null;
+
+
+        /*
+         * SEARCH
+         */
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                const number =
+                    numberInput.value.trim();
+
+                if (!number) {
+                    numberInput.focus();
+                    return;
+                }
+
+
+                showResults();
+
+                showLoading();
+
+                searchBtn.disabled = true;
+
+                searchBtn.textContent =
+                    "SEARCHING";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/.netlify/functions/lookup?num=${encodeURIComponent(number)}`,
+                            {
+                                method: "GET",
+
+                                headers: {
+                                    "Accept":
+                                        "application/json"
+                                }
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (
+                        !response.ok ||
+                        result.success === false
+                    ) {
+                        throw new Error(
+                            result.error ||
+                            "Search failed."
+                        );
+                    }
+
+
+                    latestResponse =
+                        result.data;
+
+
+                    saveHistory(number);
+
+                    renderResponse(
+                        result.data
+                    );
+
+
+                    rawJson.textContent =
+                        JSON.stringify(
+                            result.data,
+                            null,
+                            2
+                        );
+
+
+                    resultSubtitle.textContent =
+                        `Number searched: ${number}`;
+
+                    resultStatus.textContent =
+                        "RECEIVED";
+
+
+                } catch (error) {
+
+                    showError(
+                        error.message
+                    );
+
+                    resultStatus.textContent =
+                        "ERROR";
+
+                } finally {
+
+                    searchBtn.disabled = false;
+
+                    searchBtn.textContent =
+                        "SEARCH";
+                }
+
+            }
+        );
+
+
+        /*
+         * SHOW RESULTS
+         */
+
+        function showResults() {
+
+            resultsSection.style.display =
+                "block";
+
+            resultsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+
+        /*
+         * LOADING
+         */
+
+        function showLoading() {
+
+            resultContent.innerHTML = `
+
+                <div class="loading">
+
+                    <div class="spinner"></div>
+
+                    <div class="loading-title">
+                        Searching...
+                    </div>
+
+                    <div class="loading-sub">
+                        Contacting lookup service
+                    </div>
+
+                </div>
+
+            `;
+
+            rawJson.textContent = "";
+
+            latestResponse = null;
+        }
+
+
+        /*
+         * ERROR
+         */
+
+        function showError(message) {
+
+            resultContent.innerHTML = `
+
+                <div class="error-box">
+
+                    <div class="error-icon">
+                        !
+                    </div>
+
+                    <div class="error-title">
+                        Lookup Failed
+                    </div>
+
+                    <div class="error-text">
+                        ${escapeHtml(message)}
+                    </div>
+
+                </div>
+
+            `;
+
+            rawJson.textContent = "";
+        }
+
+
+        /*
+         * RESPONSE RENDERER
+         *
+         * API response ka exact schema
+         * pata na hone ke karan yeh
+         * automatically fields detect karta hai.
+         */
+
+        function renderResponse(data) {
+
+            if (
+                data === null ||
+                data === undefined
+            ) {
+
+                resultContent.innerHTML = `
+                    <div class="empty">
+                        No information returned.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            /*
+             * Primitive response
+             */
+
+            if (
+                typeof data !== "object"
+            ) {
+
+                resultContent.innerHTML = `
+
+                    <div class="data-grid">
+
+                        ${createCard(
+                            "Response",
+                            formatValue(data)
+                        )}
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            /*
+             * Object response
+             */
+
+            const entries =
+                flattenObject(data);
+
+
+            if (!entries.length) {
+
+                resultContent.innerHTML = `
+                    <div class="empty">
+                        Empty response received.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            resultContent.innerHTML = `
+
+                <div class="data-grid">
+
+                    ${entries
+                        .map(
+                            ([key, value]) =>
+                                createCard(
+                                    key,
+                                    formatValue(value)
+                                )
+                        )
+                        .join("")
+                    }
+
+                </div>
+
+            `;
+        }
+
+
+        /*
+         * CARD
+         */
+
+        function createCard(
+            key,
+            value
+        ) {
+
+            return `
+
+                <div class="data-item">
+
+                    <div class="data-key">
+                        ${escapeHtml(key)}
+                    </div>
+
+                    <div class="data-value">
+                        ${escapeHtml(value)}
+                    </div>
+
+                </div>
+
+            `;
+        }
+
+
+        /*
+         * FLATTEN JSON
+         *
+         * Example:
+         *
+         * {
+         *   user: {
+         *      name: "John"
+         *   }
+         * }
+         *
+         * becomes:
+         *
+         * user.name = John
+         */
+
+        function flattenObject(
+            object,
+            prefix = ""
+        ) {
+
+            const output = [];
+
+
+            for (
+                const [key, value]
+                of Object.entries(object)
+            ) {
+
+                const fullKey =
+                    prefix
+                        ? `${prefix}.${key}`
+                        : key;
+
+
+                if (
+                    value &&
+                    typeof value === "object" &&
+                    !Array.isArray(value)
+                ) {
+
+                    output.push(
+                        ...flattenObject(
+                            value,
+                            fullKey
+                        )
+                    );
+
+                } else {
+
+                    output.push([
+                        fullKey,
+                        value
+                    ]);
+
+                }
+
+            }
+
+
+            return output;
+        }
+
+
+        /*
+         * FORMAT VALUE
+         */
+
+        function formatValue(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "—";
+            }
+
+
+            if (
+                Array.isArray(value)
+            ) {
+
+                if (!value.length) {
+                    return "—";
+                }
+
+                return value
+                    .map(item => {
+
+                        if (
+                            typeof item === "object"
+                        ) {
+                            return JSON.stringify(item);
+                        }
+
+                        return String(item);
+
+                    })
+                    .join(", ");
+            }
+
+
+            if (
+                typeof value === "object"
+            ) {
+
+                return JSON.stringify(value);
+            }
+
+
+            return String(value);
+        }
+
+
+        /*
+         * ESCAPE HTML
+         */
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
+        }
+
+
+        /*
+         * RAW JSON TOGGLE
+         */
+
+        rawHeader.addEventListener(
+            "click",
+            () => {
+
+                rawWrap.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /*
+         * COPY
+         */
+
+        copyBtn.addEventListener(
+            "click",
+            async () => {
+
+                if (
+                    latestResponse === null
+                ) {
+                    return;
+                }
+
+
+                try {
+
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            JSON.stringify(
+                                latestResponse,
+                                null,
+                                2
+                            )
+                        );
+
+
+                    copyBtn.textContent =
+                        "COPIED ✓";
+
+
+                    setTimeout(
+                        () => {
+
+                            copyBtn.textContent =
+                                "COPY JSON";
+
+                        },
+                        1500
+                    );
+
+                } catch {
+
+                    copyBtn.textContent =
+                        "COPY FAILED";
+                }
+
+            }
+        );
+
+
+        /*
+         * HISTORY
+         */
+
+        function getHistory() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        "lexours_history"
+                    ) || "[]"
+                );
+
+            } catch {
+
+                return [];
+            }
+        }
+
+
+        function saveHistory(number) {
+
+            let history =
+                getHistory();
+
+
+            history =
+                history.filter(
+                    item => item !== number
+                );
+
+
+            history.unshift(number);
+
+
+            history =
+                history.slice(0, 8);
+
+
+            localStorage.setItem(
+                "lexours_history",
+                JSON.stringify(history)
+            );
+
+
+            renderHistory();
+        }
+
+
+        function renderHistory() {
+
+            const history =
+                getHistory();
+
+
+            if (!history.length) {
+
+                historyBox.style.display =
+                    "none";
+
+                return;
+            }
+
+
+            historyBox.style.display =
+                "block";
+
+
+            historyList.innerHTML =
+                history
+                    .map(
+                        number => `
+
+                            <button
+                                class="history-item"
+                                data-number="${escapeHtml(number)}"
+                                type="button"
+                            >
+                                ${escapeHtml(number)}
+                            </button>
+
+                        `
+                    )
+                    .join("");
+
+
+            document
+                .querySelectorAll(
+                    ".history-item"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                numberInput.value =
+                                    button.dataset.number;
+
+                                form.requestSubmit();
+
+                            }
+                        );
+
+                    }
+                );
+        }
+
+
+        clearHistoryBtn.addEventListener(
+            "click",
+            () => {
+
+                localStorage.removeItem(
+                    "lexours_history"
+                );
+
+                renderHistory();
+
+            }
+        );
+
+
+        /*
+         * INITIAL HISTORY
+         */
+
+        renderHistory();
+
+    </script>
+
+</body>
+</html>
